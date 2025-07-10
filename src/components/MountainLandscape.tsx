@@ -132,8 +132,11 @@ const Waterfall = ({ position }: { position: [number, number, number] }) => {
   const waterfallRef = useRef<THREE.Mesh>(null);
   
   useFrame((state) => {
-    if (waterfallRef.current) {
-      waterfallRef.current.material.opacity = 0.6 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
+    if (waterfallRef.current && waterfallRef.current.material) {
+      const material = waterfallRef.current.material as THREE.MeshLambertMaterial;
+      if (material.opacity !== undefined) {
+        material.opacity = 0.6 + Math.sin(state.clock.elapsedTime * 2) * 0.1;
+      }
     }
   });
 
